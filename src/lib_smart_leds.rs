@@ -57,8 +57,9 @@ where
     pub fn new<C: RmtChannel>(
         channel: impl Peripheral<P = C> + 'd,
         pin: impl Peripheral<P = impl OutputPin> + 'd,
+        mem_block_num: u8,
     ) -> Result<Self, Ws2812Esp32RmtDriverError> {
-        let driver = Ws2812Esp32RmtDriver::<'d>::new(channel, pin)?;
+        let driver = Ws2812Esp32RmtDriver::<'d>::new(channel, pin, mem_block_num)?;
         Ok(Self {
             driver,
             phantom: Default::default(),
