@@ -106,8 +106,11 @@ impl<'d> Ws2812Esp32RmtDriver<'d> {
     pub fn new<C: RmtChannel>(
         channel: impl Peripheral<P = C> + 'd,
         pin: impl Peripheral<P = impl OutputPin> + 'd,
+        mem_block_num: u8,
     ) -> Result<Self, Ws2812Esp32RmtDriverError> {
-        let config = TransmitConfig::new().clock_divider(1);
+        let config = TransmitConfig::new()
+            .clock_divider(1)
+            .mem_block_num(mem_block_num);
         let tx = TxRmtDriver::new(channel, pin, &config)?;
 
         let clock_hz = tx.counter_clock()?;
